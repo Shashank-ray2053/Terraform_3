@@ -27,7 +27,6 @@ module "security_group" {
     source = "./module/security_group"
     vpc_id = module.vpc.vpc_id
     all_traffic = var.all_traffic
-  
 }
 
 module "ec2" {
@@ -39,6 +38,16 @@ module "ec2" {
     security_group_id = module.security_group.security_group_id
     public_subnet_1 = module.subnets.public_subnet_1
     public_subnet_2 = module.subnets.public_subnet_2
+  
+}
+
+module "RDS" {
+
+    source = "./module/RDS"
+    skr_private_subnet_1 = module.subnets.private_subnet_1
+    skr_private_subnet_2 = module.subnets.private_subnet_2
+    db_security_group_id = module.security_group.db_security_group_id
+
   
 }
 
