@@ -51,3 +51,24 @@ module "RDS" {
   
 }
 
+module "route_table" {
+    source = "./module/route_table"
+    vpc_id = module.vpc.vpc_id
+    skr_ig_id = module.internet_gateway.skr_ig_id
+    all_traffic = var.all_traffic
+
+}
+
+module "association_route_table" {
+
+    source = "./module/association_route_table"
+    public_subnet_1 =module.subnets.public_subnet_1
+    public_subnet_2 = module.subnets.public_subnet_2
+    private_subnet_1 = module.subnets.private_subnet_1
+    private_subnet_2 = module.subnets.private_subnet_2
+    skr_public_rt_id = module.route_table.skr_public_rt_id
+    skr_private_rt_id = module.route_table.skr_private_rt_id
+
+  
+}
+
